@@ -1,7 +1,7 @@
 #!make
 
 # agreagate commands
-quality: pint
+code-quality: pint phpstan
 
 
 serve:
@@ -14,3 +14,6 @@ stop:
 # quality command
 pint:
 	docker-compose exec app ./vendor/bin/pint
+
+phpstan:
+	docker-compose exec app ./vendor/bin/phpstan analyse --memory-limit=2G

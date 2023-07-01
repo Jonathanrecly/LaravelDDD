@@ -11,12 +11,12 @@ final class DateTimeValueObject extends DateTimeImmutable implements DateTimeInt
 {
     public function value(): string
     {
-        return $this->setTimezone(new DateTimeZone(static::DATETIME_ZONE))->format(static::DATETIME_FORMAT);
+        return $this->setTimezone(new DateTimeZone(self::DATETIME_ZONE))->format(self::DATETIME_FORMAT);
     }
 
     public static function fromPrimitives(string $datetime): static
     {
-        return new static($datetime);
+        return new self($datetime);
     }
 
     public static function now(): static

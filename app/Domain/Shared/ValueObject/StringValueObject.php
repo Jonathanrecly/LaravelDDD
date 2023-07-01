@@ -8,7 +8,7 @@ class StringValueObject
 {
     protected string $value;
 
-    public function __construct(string $value)
+    private function __construct(string $value)
     {
         $this->value = $value;
     }
@@ -18,9 +18,9 @@ class StringValueObject
         return $this->value();
     }
 
-    public static function fromString(string $value): static
+    public static function fromString(string $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function value(): string

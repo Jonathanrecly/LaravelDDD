@@ -10,7 +10,7 @@ class FloatValueObject
 
     const PRECISION = 10;
 
-    public function __construct(float $value)
+    private function __construct(float $value)
     {
         $this->value = $value;
     }
@@ -20,9 +20,9 @@ class FloatValueObject
         return (string) $this->value();
     }
 
-    public static function fromFloat(float $value): static
+    public static function fromFloat(float $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function value(): float

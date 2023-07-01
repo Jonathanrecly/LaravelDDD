@@ -8,7 +8,7 @@ class BooleanValueObject
 {
     protected bool $value;
 
-    public function __construct(bool $value)
+    private function __construct(bool $value)
     {
         $this->value = $value;
     }
@@ -18,9 +18,9 @@ class BooleanValueObject
         return $this->value() ? 'true' : 'false';
     }
 
-    public static function fromBoolean(bool $value): static
+    public static function fromBoolean(bool $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function value(): bool

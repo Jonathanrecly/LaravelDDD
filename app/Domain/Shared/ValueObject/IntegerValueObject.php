@@ -8,7 +8,7 @@ class IntegerValueObject
 {
     protected int $value;
 
-    public function __construct(int $value)
+    private function __construct(int $value)
     {
         $this->value = $value;
     }
@@ -18,9 +18,9 @@ class IntegerValueObject
         return (string) $this->value();
     }
 
-    public static function fromInteger(int $value): static
+    public static function fromInteger(int $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function value(): int
