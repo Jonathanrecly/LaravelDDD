@@ -18,9 +18,11 @@ pint:
 phpstan:
 	docker-compose exec app ./vendor/bin/phpstan analyse --memory-limit=2G
 
+phpunit:
+	docker-compose exec app ./vendor/bin/phpunit
 
 # configuration
 
 ## launch it one time
 initgit:
-  git config core.hooksPath .githooks
+	git config core.hooksPath .githooks
