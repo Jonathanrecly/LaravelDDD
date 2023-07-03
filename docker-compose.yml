@@ -22,5 +22,25 @@ services:
             - laravel
         depends_on:
             - app
+            - db
+    db:
+        image: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRESS_USER: postgres
+            POSTGRES_PASSWORD: dddddd
+            POSTGRES_DB: docker
+        depends_on:
+            - app
+        networks:
+            - laravel
 networks:
     laravel:
+
+volumes:
+    postgres:
+        driver: local
