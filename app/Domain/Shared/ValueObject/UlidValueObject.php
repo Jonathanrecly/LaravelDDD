@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Shared\ValueObject;
 
 use App\Domain\Shared\Exception\InvalidArgumentException;
+use Illuminate\Support\Str;
 use Stringable;
-use Symfony\Component\Uid\Ulid;
 
 class UlidValueObject implements Stringable, UlidInterface
 {
@@ -26,14 +26,14 @@ class UlidValueObject implements Stringable, UlidInterface
 
     private function guard(string $value): void
     {
-        if (false === Ulid::isValid($value)) {
-            throw new InvalidArgumentException(sprintf('Value <%s> is not a valid ULID', $value));
+        if (false === Str::isUuid($value)) {
+            throw new InvalidArgumentException(sprintf('Value <%s> is not a valid UUID', $value));
         }
     }
 
     public static function random(): static
     {
-        return new static((new Ulid())->__toString());
+        return new static(Str::uuid()->toString());
     }
 
     public static function fromPrimitives(string $value): static

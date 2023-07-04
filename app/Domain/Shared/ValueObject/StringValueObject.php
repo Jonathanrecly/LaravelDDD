@@ -18,9 +18,10 @@ class StringValueObject
         return $this->value();
     }
 
-    public static function fromString(string $value): self
+    public static function fromString(string $value): static
     {
-        return new self($value);
+        /** @phpstan-ignore-next-line  */
+        return new static($value);
     }
 
     public function value(): string

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Domain\User\ValueObject\Uuid;
+use App\Infrastructure\Laravel\Model\UserModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -10,6 +12,8 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    protected $model = UserModel::class;
+
     /**
      * Define the model's default state.
      *
@@ -18,6 +22,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => Uuid::random(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
