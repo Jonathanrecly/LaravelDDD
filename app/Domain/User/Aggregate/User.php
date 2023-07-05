@@ -15,23 +15,12 @@ final readonly class User
     ) {
     }
 
-    public static function create(
+    public static function make(
         Uuid $uuid,
         Name $name,
         Email $email,
     ): self {
         return new self($uuid, $name, $email);
-    }
-
-    public static function new(
-        Name $name,
-        Email $email,
-    ): self {
-        return new self(
-            Uuid::random(),
-            $name,
-            $email,
-        );
     }
 
     public function getUuid(): Uuid
