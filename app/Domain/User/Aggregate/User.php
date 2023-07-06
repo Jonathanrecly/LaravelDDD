@@ -7,10 +7,10 @@ use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\Name;
 use App\Domain\User\ValueObject\Uuid;
 
-final readonly class User implements Aggregate
+final class User implements Aggregate
 {
     private function __construct(
-        private Uuid $uuid,
+        private readonly Uuid $uuid,
         private Name $name,
         private Email $email,
     ) {
@@ -39,15 +39,25 @@ final readonly class User implements Aggregate
         return $this->email;
     }
 
+    public function updateName(string $name): void
+    {
+        $this->name = Name::fromString($name);
+    }
+
+    public function updateEmail(string $email): void
+    {
+        $this->email = Email::fromString($email);
+    }
+
     /**
-     * @return  array<string,Email|Name|Uuid>
+     * @return  array<string, string>
      */
     public function toArray(): array
     {
         return [
-            'uuid' => $this->getUuid(),
-            'name' => $this->getName(),
-            'email' => $this->getEmail(),
+            'uuid' => $this->getUuid()->value(),
+            'name' => $this->getName()->value(),
+            'email' => $this->getEmail()->value(),
         ];
     }
 }

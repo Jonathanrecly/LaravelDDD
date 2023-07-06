@@ -4,8 +4,10 @@ namespace App\Infrastructure\UI\Controllers;
 
 use App\Application\User\UserRequestCriteriaFactory;
 use App\Domain\User\StoreUserRequest;
+use App\Domain\User\UpdateUserRequest;
 use App\Domain\User\UserController as UserControllerContract;
 use App\Domain\User\UserService;
+use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -31,5 +33,15 @@ class UserController extends Controller implements UserControllerContract
     public function store(StoreUserRequest $request): JsonResource
     {
         return new JsonResource($this->userService->createFromUserRequest($request));
+    }
+
+    public function update(UpdateUserRequest $request, string $uuid): JsonResource
+    {
+        return new JsonResource(
+            $this->userService->UpdateFromUserRequest(
+                Uuid::fromPrimitives($uuid),
+                $request
+            )
+        );
     }
 }

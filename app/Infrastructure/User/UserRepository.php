@@ -5,8 +5,10 @@ namespace App\Infrastructure\User;
 use App\Domain\User\Aggregate\User;
 use App\Domain\User\UserRepository as UserRepositoryContract;
 use App\Domain\User\UserSearchCriteria;
+use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Model\UserModel;
 use App\Infrastructure\Laravel\Service\PaginatorSorter;
+use Illuminate\Database\Eloquent\Model;
 
 class UserRepository implements UserRepositoryContract
 {
@@ -28,6 +30,17 @@ class UserRepository implements UserRepositoryContract
         $userModel->save();
     }
 
+    public function findByUuid(Uuid $uuid): User
+    {
+        /** @var UserModel $userModel */
+        $userModel = $this->firstOrFailByUUid($uuid);
+
+        /** @var User $user */
+        $user = $this->userTransformer->toDomain($userModel);
+
+        return $user;
+    }
+
     public function findAll(UserSearchCriteria $userSearchCriteria): UserCollection
     {
         $query = $this->userModel->newQuery();
@@ -46,5 +59,21 @@ class UserRepository implements UserRepositoryContract
             $query->get()
                 ->map(fn ($userModel) => $this->userTransformer->toDomain($userModel))
         );
+    }
+
+    public function update(User $user): void
+    {
+        /** @var UserModel $userModel */
+        $userModel = $this->firstOrFailByUUid($user->getUuid());
+
+        $userModel->name = $user->getName();
+        $userModel->email = $user->getEmail();
+
+        $userModel->save();
+    }
+
+    private function firstOrFailByUUid(Uuid $uuid): Model
+    {
+        return $this->userModel->newQuery()->where('uuid', $uuid->value())->firstOrFail();
     }
 }

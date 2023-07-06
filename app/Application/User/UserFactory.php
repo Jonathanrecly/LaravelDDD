@@ -4,6 +4,7 @@ namespace App\Application\User;
 
 use App\Domain\User\Aggregate\User;
 use App\Domain\User\StoreUserRequest;
+use App\Domain\User\UpdateUserRequest;
 use App\Domain\User\UserFactory as UserFactoryContract;
 use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\Name;
@@ -17,6 +18,15 @@ class UserFactory implements UserFactoryContract
             uuid: Uuid::random(),
             name: Name::fromString($request->getName()),
             email: Email::fromString($request->getEmail())
+        );
+    }
+
+    public function makeFromUuidAndRequest(Uuid $uuid, UpdateUserRequest $request): User
+    {
+        return User::make(
+            uuid: $uuid,
+            name: Name::fromString($request->getName() ?? ''),
+            email: Email::fromString($request->getEmail() ?? '')
         );
     }
 }

@@ -56,9 +56,40 @@ class UserControllerTest extends TestCase
         // assert
         $response->assertSuccessful();
 
+        $response->assertJsonFragment([
+            'name' => 'John Doe',
+            'email' => 'john@doe.com',
+        ]);
+
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
             'email' => 'john@doe.com',
+        ]);
+    }
+
+    /** @test */
+    public function it_should_update_user(): void
+    {
+        // setup
+        $user = (new UserFactory)->create();
+
+        // test
+        $response = $this->putJson(route('user.update', [
+            'uuid' => $user->uuid,
+        ]), [
+            'name' => 'John Doe',
+        ]);
+
+        // assert
+        $response->assertSuccessful();
+
+        $response->assertJsonFragment([
+            'name' => 'John Doe',
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'John Doe',
+            'uuid' => $user->uuid,
         ]);
     }
 
