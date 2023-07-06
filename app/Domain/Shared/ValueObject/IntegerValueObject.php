@@ -18,9 +18,10 @@ class IntegerValueObject
         return (string) $this->value();
     }
 
-    public static function fromInteger(int $value): self
+    public static function fromInteger(int $value): static
     {
-        return new self($value);
+        /** @phpstan-ignore-next-line  */
+        return new static($value);
     }
 
     public function value(): int
