@@ -3,7 +3,6 @@
 namespace App\Infrastructure\User;
 
 use App\Domain\User\Aggregate\User;
-use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository as UserRepositoryContract;
 use App\Domain\User\UserSearchCriteria;
 use App\Infrastructure\Laravel\Model\UserModel;
@@ -12,7 +11,7 @@ class UserRepository implements UserRepositoryContract
 {
     public function __construct(
         private readonly UserModel $userModel,
-        private readonly UserFactory $userFactory,
+        private readonly UserTransformer $userTransformer
     ) {
     }
 
@@ -50,7 +49,7 @@ class UserRepository implements UserRepositoryContract
 
         return new UserCollection(
             $query->get()
-                ->map(fn (UserModel $userModel) => $this->userFactory->newFromModel($userModel))
+                ->map(fn (UserModel $userModel) => $this->userTransformer->toDomain($userModel))
         );
     }
 }

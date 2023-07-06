@@ -2,11 +2,12 @@
 
 namespace App\Domain\User\Aggregate;
 
+use App\Domain\Shared\Aggregate;
 use App\Domain\User\ValueObject\Email;
 use App\Domain\User\ValueObject\Name;
 use App\Domain\User\ValueObject\Uuid;
 
-final readonly class User
+final readonly class User implements Aggregate
 {
     private function __construct(
         private Uuid $uuid,
