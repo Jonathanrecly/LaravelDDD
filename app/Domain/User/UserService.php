@@ -13,4 +13,6 @@ interface UserService
     public function findAll(UserSearchCriteria $userSearchCriteria): Collection;
 
     public function UpdateFromUserRequest(Uuid $uuid, UpdateUserRequest $userRequest): User;
+
+    public function findByUuid(Uuid $uuid): User;
 }

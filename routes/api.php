@@ -22,6 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::post('user', [UserController::class, 'store'])->name('user.store');
-    Route::get('user/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::get('user/{uuid}', [UserController::class, 'show'])->name('user.show');
     Route::put('user/{uuid}', [UserController::class, 'update'])->name('user.update');
 });

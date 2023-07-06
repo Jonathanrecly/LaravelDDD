@@ -55,4 +55,9 @@ class UserService implements UserServiceContract
 
         return $user;
     }
+
+    public function findByUuid(Uuid $uuid): User
+    {
+        return $this->userRepository->findByUuid($uuid);
+    }
 }

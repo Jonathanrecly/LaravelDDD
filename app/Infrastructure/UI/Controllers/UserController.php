@@ -30,6 +30,11 @@ class UserController extends Controller implements UserControllerContract
         );
     }
 
+    public function show(string $uuid): JsonResource
+    {
+        return new JsonResource($this->userService->findByUuid(Uuid::fromPrimitives($uuid)));
+    }
+
     public function store(StoreUserRequest $request): JsonResource
     {
         return new JsonResource($this->userService->createFromUserRequest($request));

@@ -93,6 +93,26 @@ class UserControllerTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function it_should_show_user(): void
+    {
+        // setup
+        $user = (new UserFactory)->create();
+
+        // test
+        $response = $this->getJson(route('user.show', [
+            'uuid' => $user->uuid,
+        ]));
+
+        // assert
+        $response->assertSuccessful();
+
+        $response->assertJsonFragment([
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
+
     /**
      * @dataProvider validFilterProvider
      *
