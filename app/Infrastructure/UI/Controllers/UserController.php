@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Controllers;
+namespace App\Infrastructure\UI\Controllers;
 
 use App\Application\User\UserRequestCriteriaFactory;
 use App\Domain\User\StoreUserRequest;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Requests\User;
+namespace App\Infrastructure\UI\Requests\User;
 
 use App\Domain\User\StoreUserRequest as StoreUserContract;
 use Illuminate\Foundation\Http\FormRequest;

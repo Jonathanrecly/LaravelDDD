@@ -9,9 +9,9 @@ use App\Domain\User\UserController as UserControllerContract;
 use App\Domain\User\UserFactory as UserFactoryContract;
 use App\Domain\User\UserRepository as UserRepositoryContract;
 use App\Domain\User\UserService as UserServiceContract;
+use App\Infrastructure\UI\Controllers\UserController;
+use App\Infrastructure\UI\Requests\User\StoreUserRequest;
 use App\Infrastructure\User\UserRepository;
-use App\UI\Controllers\UserController;
-use App\UI\Requests\User\StoreUserRequest;
 use Illuminate\Support\ServiceProvider;
 
 class BindServiceProvider extends ServiceProvider
