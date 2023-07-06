@@ -6,12 +6,14 @@ use App\Domain\User\Aggregate\User;
 use App\Domain\User\UserRepository as UserRepositoryContract;
 use App\Domain\User\UserSearchCriteria;
 use App\Infrastructure\Laravel\Model\UserModel;
+use App\Infrastructure\Laravel\Service\PaginatorSorter;
 
 class UserRepository implements UserRepositoryContract
 {
     public function __construct(
         private readonly UserModel $userModel,
-        private readonly UserTransformer $userTransformer
+        private readonly UserTransformer $userTransformer,
+        private readonly PaginatorSorter $paginatorSorter,
     ) {
     }
 
@@ -38,18 +40,11 @@ class UserRepository implements UserRepositoryContract
             $query = $query->where('name', 'like', '%'.$userSearchCriteria->name().'%');
         }
 
-        if ($userSearchCriteria->pagination() !== null) {
-            $query = $query->take($userSearchCriteria->pagination()->limit()->value())
-                ->skip($userSearchCriteria->pagination()->offset()->value());
-        }
-
-        if ($userSearchCriteria->sort() !== null) {
-            $query = $query->orderBy($userSearchCriteria->sort()->field()->value(), $userSearchCriteria->sort()->direction()->value());
-        }
+        $query = $this->paginatorSorter->apply($query, $userSearchCriteria);
 
         return new UserCollection(
             $query->get()
-                ->map(fn (UserModel $userModel) => $this->userTransformer->toDomain($userModel))
+                ->map(fn ($userModel) => $this->userTransformer->toDomain($userModel))
         );
     }
 }

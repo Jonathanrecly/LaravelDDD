@@ -26,10 +26,11 @@ class UserTransformer extends Transformer
     }
 
     /**
-     * @param  UserModel  $model
+     * @param  UserModel|Model  $model
      */
-    public function toDomain(Model $model): Aggregate
+    public function toDomain($model): Aggregate
     {
+        /** @var UserModel $model */
         return User::make(
             Uuid::fromPrimitives($model->uuid),
             Name::fromString($model->name),

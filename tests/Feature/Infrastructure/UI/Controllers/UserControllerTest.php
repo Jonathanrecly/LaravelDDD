@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UI\Controllers;
+namespace Tests\Feature\Infrastructure\UI\Controllers;
 
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -2,11 +2,11 @@
 
 namespace App\Infrastructure\User;
 
-use App\Infrastructure\Laravel\Model\UserModel;
+use App\Domain\User\Aggregate\User;
 use Illuminate\Support\Collection;
 
 /**
- * @extends Collection<int, UserModel>
+ * @extends Collection<int, User>
  */
 class UserCollection extends Collection
 {
