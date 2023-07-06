@@ -2,8 +2,8 @@
 
 namespace App\Domain\User\ValueObject;
 
-use App\Domain\Shared\ValueObject\StringValueObject;
+use App\Domain\Shared\ValueObject\StringVO;
 
-final class Email extends StringValueObject
+final class Email extends StringVO
 {
 }

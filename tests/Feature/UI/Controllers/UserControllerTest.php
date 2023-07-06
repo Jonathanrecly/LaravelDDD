@@ -44,28 +44,6 @@ class UserControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_filter_user_list(): void
-    {
-        // setup
-        (new UserFactory)->count(3)->create();
-        (new UserFactory)->create([
-            'name' => 'John Doe',
-            'email' => 'john@doe.com',
-            'password' => 'secret',
-        ]);
-
-        // test
-        $response = $this->getJson(route('user.index', [
-            'filter' => ['name' => 'John Doe'],
-        ]));
-
-        // assert
-        $response->assertSuccessful();
-
-        $response->assertJsonCount(1, 'data');
-    }
-
-    /** @test */
     public function it_should_store_new_user(): void
     {
         // test
@@ -82,5 +60,39 @@ class UserControllerTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john@doe.com',
         ]);
+    }
+
+    /**
+     * @dataProvider validFilterProvider
+     *
+     * @test
+     */
+    public function it_should_filter_user_list($filter): void
+    {
+        // setup
+        (new UserFactory)->count(3)->create();
+        (new UserFactory)->create([
+            'name' => 'John Doe',
+            'email' => 'john@doe.com',
+            'password' => 'secret',
+        ]);
+
+        // test
+        $response = $this->getJson(route('user.index', [
+            'filter' => $filter,
+        ]));
+
+        // assert
+        $response->assertSuccessful();
+
+        $response->assertJsonCount(1, 'data');
+    }
+
+    public static function validFilterProvider(): array
+    {
+        return [
+            'filter by name' => [['name' => 'John Doe']],
+            'filter by email' => [['email' => 'john@doe.com']],
+        ];
     }
 }

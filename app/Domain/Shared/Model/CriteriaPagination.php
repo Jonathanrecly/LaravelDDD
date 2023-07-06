@@ -6,7 +6,7 @@ namespace App\Domain\Shared\Model;
 
 use App\Domain\Shared\Model\Pagination\Limit;
 use App\Domain\Shared\Model\Pagination\Offset;
-use App\Domain\Shared\ValueObject\IntegerValueObject;
+use App\Domain\Shared\ValueObject\Integer;
 
 final class CriteriaPagination
 {
@@ -20,22 +20,22 @@ final class CriteriaPagination
         $this->offset = $offset;
     }
 
-    public function totalPagesFromResult(int $totalItems): IntegerValueObject
+    public function totalPagesFromResult(int $totalItems): Integer
     {
         if (0 === $totalItems) {
-            return IntegerValueObject::fromInteger(1);
+            return Integer::fromInteger(1);
         }
 
-        return IntegerValueObject::fromInteger((int) ceil($totalItems / $this->limit->value()));
+        return Integer::fromInteger((int) ceil($totalItems / $this->limit->value()));
     }
 
-    public function page(): IntegerValueObject
+    public function page(): Integer
     {
         if (0 === $this->offset->value()) {
-            return IntegerValueObject::fromInteger(1);
+            return Integer::fromInteger(1);
         }
 
-        return IntegerValueObject::fromInteger((int) ceil($this->offset->value() / $this->limit->value()));
+        return Integer::fromInteger((int) ceil($this->offset->value() / $this->limit->value()));
     }
 
     public function limit(): Limit

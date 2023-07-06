@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\ValueObject;
 
-class StringValueObject
+class StringVO
 {
     protected string $value;
 
@@ -13,7 +13,7 @@ class StringValueObject
         $this->value = $value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value();
     }
@@ -29,7 +29,7 @@ class StringValueObject
         return $this->value;
     }
 
-    public function equals(StringValueObject $otherString): bool
+    public function equals(StringVO $otherString): bool
     {
         return $this->value === $otherString->value;
     }

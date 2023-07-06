@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\ValueObject;
 
-class IntegerValueObject
+class Integer
 {
     protected int $value;
 
@@ -29,7 +29,7 @@ class IntegerValueObject
         return $this->value;
     }
 
-    public function isLessThan(IntegerValueObject $otherInt): bool
+    public function isLessThan(Integer $otherInt): bool
     {
         return $this->value() < $otherInt->value();
     }
@@ -39,7 +39,7 @@ class IntegerValueObject
         return 0 === $this->value();
     }
 
-    public function equals(IntegerValueObject $otherInt): bool
+    public function equals(Integer $otherInt): bool
     {
         return $this->value() === $otherInt->value();
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\ValueObject;
 
-class BooleanValueObject
+class Boolean
 {
     protected bool $value;
 
@@ -13,7 +13,7 @@ class BooleanValueObject
         $this->value = $value;
     }
 
-    public function __toString(): string
+    public function __toString(): StringVO
     {
         return $this->value() ? 'true' : 'false';
     }
@@ -28,7 +28,7 @@ class BooleanValueObject
         return $this->value;
     }
 
-    public function equals(BooleanValueObject $booleanValueObject): bool
+    public function equals(Boolean $booleanValueObject): bool
     {
         return $this->value === $booleanValueObject->value;
     }

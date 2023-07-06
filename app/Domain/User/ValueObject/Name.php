@@ -2,7 +2,7 @@
 
 namespace App\Domain\User\ValueObject;
 
-use App\Domain\Shared\ValueObject\StringValueObject;
+use App\Domain\Shared\ValueObject\StringVO as StringValueObject;
 
 final class Name extends StringValueObject
 {
