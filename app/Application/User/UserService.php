@@ -36,20 +36,12 @@ class UserService implements UserServiceContract
             ->findAll($userSearchCriteria);
     }
 
-    public function UpdateFromUserRequest(Uuid $uuid, UpdateUserRequest $userRequest): User
+    public function updateFromUserRequest(Uuid $uuid, UpdateUserRequest $userRequest): User
     {
-        $user = $this->userRepository->findByUuid($uuid);
-
-        $name = $userRequest->getName();
-        $email = $userRequest->getEmail();
-
-        if (! empty($name)) {
-            $user->updateName($name);
-        }
-
-        if (! empty($email)) {
-            $user->updateEmail($email);
-        }
+        $user = $this->userFactory->makeFromUserAndRequest(
+            $this->userRepository->findByUuid($uuid),
+            $userRequest
+        );
 
         $this->userRepository->update($user);
 

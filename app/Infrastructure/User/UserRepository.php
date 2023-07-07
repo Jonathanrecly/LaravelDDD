@@ -3,12 +3,16 @@
 namespace App\Infrastructure\User;
 
 use App\Domain\User\Aggregate\User;
+use App\Domain\User\Exceptions\UserNotFoundException;
+use App\Domain\User\Exceptions\UserNotSavedException;
 use App\Domain\User\UserRepository as UserRepositoryContract;
 use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Model\UserModel;
 use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\UserSearchCriteria;
 use App\Infrastructure\Laravel\Service\RequestCriteria\QueryApplicator;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository implements UserRepositoryContract
 {
@@ -19,6 +23,9 @@ class UserRepository implements UserRepositoryContract
     ) {
     }
 
+    /**
+     * @throws UserNotSavedException
+     */
     public function create(User $user): void
     {
         $userModel = $this->userModel->newInstance();
@@ -27,9 +34,12 @@ class UserRepository implements UserRepositoryContract
         $userModel->name = $user->getName();
         $userModel->email = $user->getEmail();
 
-        $userModel->save();
+        $this->saveUserModel($userModel);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function findByUuid(Uuid $uuid): User
     {
         /** @var UserModel $userModel */
@@ -61,6 +71,10 @@ class UserRepository implements UserRepositoryContract
         );
     }
 
+    /**
+     * @throws UserNotSavedException
+     * @throws UserNotFoundException
+     */
     public function update(User $user): void
     {
         /** @var UserModel $userModel */
@@ -69,11 +83,30 @@ class UserRepository implements UserRepositoryContract
         $userModel->name = $user->getName();
         $userModel->email = $user->getEmail();
 
-        $userModel->save();
+        $this->saveUserModel($userModel);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     private function firstOrFailByUUid(Uuid $uuid): Model
     {
-        return $this->userModel->newQuery()->where('uuid', $uuid->value())->firstOrFail();
+        try {
+            return $this->userModel->newQuery()->where('uuid', $uuid->value())->firstOrFail();
+        } catch (ModelNotFoundException) {
+            throw new UserNotFoundException();
+        }
+    }
+
+    /**
+     * @throws UserNotSavedException
+     */
+    private function saveUserModel(UserModel $userModel): void
+    {
+        try {
+            $userModel->save();
+        } catch (Exception $e) {
+            throw new UserNotSavedException($e->getMessage());
+        }
     }
 }

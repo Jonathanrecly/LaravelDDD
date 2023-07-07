@@ -43,7 +43,7 @@ class UserController extends Controller implements UserControllerContract
     public function update(UpdateUserRequest $request, string $uuid): JsonResource
     {
         return new JsonResource(
-            $this->userService->UpdateFromUserRequest(
+            $this->userService->updateFromUserRequest(
                 Uuid::fromPrimitives($uuid),
                 $request
             )

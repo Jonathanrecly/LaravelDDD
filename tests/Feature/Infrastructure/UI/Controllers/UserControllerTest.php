@@ -54,7 +54,7 @@ class UserControllerTest extends TestCase
         ]);
 
         // assert
-        $response->assertSuccessful();
+        $response->assertStatus(200);
 
         $response->assertJsonFragment([
             'name' => 'John Doe',

@@ -21,12 +21,19 @@ class UserFactory implements UserFactoryContract
         );
     }
 
-    public function makeFromUuidAndRequest(Uuid $uuid, UpdateUserRequest $request): User
+    public function makeFromUserAndRequest(User $user, UpdateUserRequest $request): User
     {
-        return User::make(
-            uuid: $uuid,
-            name: Name::fromString($request->getName() ?? ''),
-            email: Email::fromString($request->getEmail() ?? '')
-        );
+        $name = $request->getName();
+        $email = $request->getEmail();
+
+        if (! empty($name)) {
+            $user->updateName($name);
+        }
+
+        if (! empty($email)) {
+            $user->updateEmail($email);
+        }
+
+        return $user;
     }
 }
