@@ -7,9 +7,9 @@ use App\Domain\User\StoreUserRequest;
 use App\Domain\User\UpdateUserRequest;
 use App\Domain\User\UserFactory;
 use App\Domain\User\UserRepository;
-use App\Domain\User\UserSearchCriteria;
 use App\Domain\User\UserService as UserServiceContract;
 use App\Domain\User\ValueObject\Uuid;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\UserSearchCriteria;
 use Illuminate\Support\Collection;
 
 class UserService implements UserServiceContract

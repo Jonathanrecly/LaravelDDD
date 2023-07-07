@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Model;
+namespace App\Infrastructure\Laravel\Service\RequestCriteria\Criteria;
 
 final class CriteriaSort
 {

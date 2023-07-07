@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\ValueObject;
 
-class StringVO
+class StringEntity
 {
     protected string $value;
 
@@ -29,7 +29,7 @@ class StringVO
         return $this->value;
     }
 
-    public function equals(StringVO $otherString): bool
+    public function equals(StringEntity $otherString): bool
     {
         return $this->value === $otherString->value;
     }

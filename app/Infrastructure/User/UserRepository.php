@@ -4,10 +4,10 @@ namespace App\Infrastructure\User;
 
 use App\Domain\User\Aggregate\User;
 use App\Domain\User\UserRepository as UserRepositoryContract;
-use App\Domain\User\UserSearchCriteria;
 use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Model\UserModel;
-use App\Infrastructure\Laravel\Service\PaginatorSorter;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\UserSearchCriteria;
+use App\Infrastructure\Laravel\Service\RequestCriteria\QueryApplicator;
 use Illuminate\Database\Eloquent\Model;
 
 class UserRepository implements UserRepositoryContract
@@ -15,7 +15,7 @@ class UserRepository implements UserRepositoryContract
     public function __construct(
         private readonly UserModel $userModel,
         private readonly UserTransformer $userTransformer,
-        private readonly PaginatorSorter $paginatorSorter,
+        private readonly QueryApplicator $queryApplicator,
     ) {
     }
 
@@ -53,7 +53,7 @@ class UserRepository implements UserRepositoryContract
             $query = $query->where('name', 'like', '%'.$userSearchCriteria->name().'%');
         }
 
-        $query = $this->paginatorSorter->apply($query, $userSearchCriteria);
+        $query = $this->queryApplicator->apply($query, $userSearchCriteria);
 
         return new UserCollection(
             $query->get()

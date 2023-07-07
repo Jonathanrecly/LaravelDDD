@@ -2,16 +2,14 @@
 
 namespace Tests\Feature\Infrastructure;
 
-use App\Domain\Shared\Model\Criteria;
-use App\Domain\Shared\Model\CriteriaField;
-use App\Domain\Shared\Model\CriteriaPagination;
-use App\Domain\Shared\Model\CriteriaSort;
-use App\Domain\Shared\Model\CriteriaSortDirection;
-use App\Domain\Shared\Model\Pagination\Limit;
-use App\Domain\Shared\Model\Pagination\Offset;
-use App\Domain\Shared\ValueObject\Integer;
-use App\Infrastructure\Laravel\Service\PaginatorSorter;
+use App\Domain\Shared\ValueObject\IntegerEntity;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\Criteria;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaPagination;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaSort;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Factory;
+use App\Infrastructure\Laravel\Service\RequestCriteria\QueryApplicator;
 use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpFoundation\InputBag;
 use Tests\TestCase;
 
 class PaginatorSorterTest extends TestCase
@@ -19,21 +17,23 @@ class PaginatorSorterTest extends TestCase
     /** @test */
     public function it_should_paginate_query_builder(): void
     {
-        /** @var PaginatorSorter $paginatorSorter */
-        $paginatorSorter = $this->app->make(PaginatorSorter::class);
-        $offset = Integer::fromInteger(1);
-        $limit = Integer::fromInteger(10);
+        /** @var QueryApplicator $queryApplicator */
+        $queryApplicator = $this->app->make(QueryApplicator::class);
+        $offset = IntegerEntity::fromInteger(1);
+        $limit = IntegerEntity::fromInteger(10);
 
-        $criteriaPagination = new CriteriaPagination(
-            Limit::fromInteger($limit->value()),
-            Offset::fromInteger($offset->value())
-        );
+        $factory = $this->getRequestCriteriaFactory();
+
+        $criteriaPagination = $factory->makePaginationFromInputBag(new InputBag([
+            'offset' => $offset->value(),
+            'limit' => $limit->value(),
+        ]));
 
         $mockedCriteria = $this->getMockCriteria($criteriaPagination, null);
 
         $builder = new Builder(resolve(\Illuminate\Database\Query\Builder::class));
 
-        $builder = $paginatorSorter->apply($builder, $mockedCriteria);
+        $builder = $queryApplicator->apply($builder, $mockedCriteria);
 
         $this->assertEquals($builder->getQuery()->limit, $limit->value());
         $this->assertEquals($builder->getQuery()->offset, $offset->value());
@@ -42,19 +42,26 @@ class PaginatorSorterTest extends TestCase
     /** @test */
     public function it_should_sort_query_builder(): void
     {
-        /** @var PaginatorSorter $paginatorSorter */
-        $paginatorSorter = $this->app->make(PaginatorSorter::class);
+        /** @var QueryApplicator $queryApplicator */
+        $queryApplicator = $this->app->make(QueryApplicator::class);
 
-        $criteriaSort = new CriteriaSort(
-            CriteriaField::fromString('name'),
-            CriteriaSortDirection::DESC
-        );
+        $factory = $this->getRequestCriteriaFactory();
 
-        $mockedCriteria = $this->getMockCriteria(null, $criteriaSort);
+        $criteriaPagination = $factory->makePaginationFromInputBag(new InputBag([
+            'offset' => 0,
+            'limit' => 10,
+        ]));
+
+        $criteriaSort = $factory->makeSortFromInputBag(new InputBag([
+            'sort' => 'name',
+            'direction' => 'DESC',
+        ]));
+
+        $mockedCriteria = $this->getMockCriteria($criteriaPagination, $criteriaSort);
 
         $builder = new Builder(resolve(\Illuminate\Database\Query\Builder::class));
 
-        $builder = $paginatorSorter->apply($builder, $mockedCriteria);
+        $builder = $queryApplicator->apply($builder, $mockedCriteria);
 
         $this->assertEquals($builder->getQuery()->orders[0]['column'], $criteriaSort->field()->value());
         $this->assertEquals($builder->getQuery()->orders[0]['direction'], strtolower($criteriaSort->direction()->value()));
@@ -68,6 +75,13 @@ class PaginatorSorterTest extends TestCase
             {
                 parent::__construct($pagination, $sort);
             }
+        };
+    }
+
+    private function getRequestCriteriaFactory(): Factory
+    {
+        return new class extends Factory
+        {
         };
     }
 }

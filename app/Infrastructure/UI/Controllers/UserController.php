@@ -2,13 +2,13 @@
 
 namespace App\Infrastructure\UI\Controllers;
 
-use App\Application\User\UserRequestCriteriaFactory;
 use App\Domain\User\StoreUserRequest;
 use App\Domain\User\UpdateUserRequest;
 use App\Domain\User\UserController as UserControllerContract;
 use App\Domain\User\UserService;
 use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Controller;
+use App\Infrastructure\Laravel\Service\RequestCriteria\UserRequestCriteriaFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;

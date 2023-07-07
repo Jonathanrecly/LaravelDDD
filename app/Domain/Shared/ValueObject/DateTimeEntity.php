@@ -7,7 +7,7 @@ namespace App\Domain\Shared\ValueObject;
 use DateTimeImmutable;
 use DateTimeZone;
 
-final class DateTime extends DateTimeImmutable implements DateTimeInterface
+final class DateTimeEntity extends DateTimeImmutable implements DateTimeInterface
 {
     public function value(): string
     {

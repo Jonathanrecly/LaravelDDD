@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Infrastructure\Laravel\Service;
+namespace App\Infrastructure\Laravel\Service\RequestCriteria;
 
-use App\Domain\Shared\Model\Criteria;
-use App\Domain\Shared\Model\CriteriaPagination;
-use App\Domain\Shared\Model\CriteriaSort;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\Criteria;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaPagination;
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaSort;
 use Illuminate\Database\Eloquent\Builder;
 
-class PaginatorSorter
+class QueryApplicator
 {
     public function apply(Builder $query, Criteria $criteria): Builder
     {
+
         if ($criteria->pagination() !== null) {
             $query = $this->applyPagination($query, $criteria->pagination());
         }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Domain\Shared\Model;
+namespace App\Infrastructure\Laravel\Service\RequestCriteria\Criteria;
 
 abstract class Criteria
 {
-    private ?CriteriaPagination $pagination;
+    private CriteriaPagination $pagination;
 
     private ?CriteriaSort $sort;
 
-    protected function __construct(?CriteriaPagination $pagination = null, ?CriteriaSort $sort = null)
+    protected function __construct(CriteriaPagination $pagination, ?CriteriaSort $sort = null)
     {
         $this->pagination = $pagination;
         $this->sort = $sort;

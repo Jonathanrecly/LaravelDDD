@@ -8,7 +8,7 @@ use App\Domain\Shared\Exception\InvalidArgumentException;
 use Illuminate\Support\Str;
 use Stringable;
 
-class Ulid implements Stringable, UlidInterface
+class UlidEntity implements Stringable, UlidInterface
 {
     private string $value;
 
