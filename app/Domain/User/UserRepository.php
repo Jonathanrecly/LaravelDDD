@@ -3,9 +3,8 @@
 namespace App\Domain\User;
 
 use App\Domain\User\Aggregate\User;
+use App\Domain\User\Aggregate\UserCollection;
 use App\Domain\User\ValueObject\Uuid;
-use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\UserSearchCriteria;
-use App\Infrastructure\User\UserCollection;
 
 interface UserRepository
 {

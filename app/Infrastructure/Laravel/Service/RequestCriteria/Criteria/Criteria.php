@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\Laravel\Service\RequestCriteria\Criteria;
 
-abstract class Criteria
+use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria as CriteriaContract;
+
+abstract class Criteria implements CriteriaContract
 {
     private CriteriaPagination $pagination;
 

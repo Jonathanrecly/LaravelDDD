@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Laravel\Service\RequestCriteria;
 
-use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\Criteria;
 use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaPagination;
 use App\Infrastructure\Laravel\Service\RequestCriteria\Criteria\CriteriaSort;
 use Illuminate\Database\Eloquent\Builder;

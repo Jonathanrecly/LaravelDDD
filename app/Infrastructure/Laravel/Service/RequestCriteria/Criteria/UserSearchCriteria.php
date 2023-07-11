@@ -3,8 +3,9 @@
 namespace App\Infrastructure\Laravel\Service\RequestCriteria\Criteria;
 
 use App\Domain\User\Bags\UserFilterBag;
+use App\Domain\User\UserSearchCriteria as UserSearchCriteriaContract;
 
-class UserSearchCriteria extends Criteria
+class UserSearchCriteria extends Criteria implements UserSearchCriteriaContract
 {
     public function __construct(
         private readonly UserFilterBag $userFilterBag,
