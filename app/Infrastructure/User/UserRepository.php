@@ -10,6 +10,7 @@ use App\Domain\User\UserSearchCriteria;
 use App\Domain\User\ValueObject\Uuid;
 use App\Infrastructure\Laravel\Model\UserModel;
 use App\Infrastructure\Laravel\Service\RequestCriteria\QueryApplicator;
+use App\Infrastructure\User\Events\UserCreated;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -35,6 +36,8 @@ class UserRepository implements UserRepositoryContract
         $userModel->email = $user->getEmail();
 
         $this->saveUserModel($userModel);
+
+        UserCreated::dispatch(Uuid::fromPrimitives($userModel->uuid));
     }
 
     /**
