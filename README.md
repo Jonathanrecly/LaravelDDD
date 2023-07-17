@@ -1,4 +1,4 @@
-![example workflow](https://github.com/jonathanrecly/LaravelDDD/actions/workflows/main.yml/badge.svg)
+![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/laravel.yml/badge.svg)
 
 ## Implementation
 
