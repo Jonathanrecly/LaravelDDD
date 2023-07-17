@@ -6,5 +6,6 @@ This project is a simple implementation of a DDD architecture with Laravel 8 and
 
 - add docker without sail
 - implement DDD architecture
+- adding post validation (pint and phpstan before commit hook)
 - add first implementation with user
-
+- add github action runner and badge
