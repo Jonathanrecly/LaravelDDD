@@ -21,7 +21,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY docker/nginx/default.conf /etc/nginx/conf.d/
 
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN useradd --no-create-home -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
