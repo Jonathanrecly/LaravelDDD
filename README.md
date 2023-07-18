@@ -1,4 +1,4 @@
-![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/phpunit.yml/badge.svg)
+![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/laravel.yml/badge.svg)
 
 ## Implementation
 
@@ -6,7 +6,8 @@ This project is a simple implementation of a DDD architecture with Laravel 8 and
 
 - add docker without sail
 - implement DDD architecture
-- adding post validation (pint and phpstan before commit hook)
+- adding pré validation (pint and phpstan before commit hook)
 - add makefile shortcut
 - add first implementation with user
-- add github action runner and badge
+- add PHPUnit github action runner and badge
+- add Quality (pint and phpstan) github action runner and badge
