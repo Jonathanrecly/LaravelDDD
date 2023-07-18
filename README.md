@@ -1,4 +1,5 @@
-![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/laravel.yml/badge.svg)
+![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/phpunit.yml/badge.svg)
+![Tests workflow](https://github.com/Jonathanrecly/LaravelDDD/actions/workflows/quality.yml/badge.svg)
 
 ## Implementation
 

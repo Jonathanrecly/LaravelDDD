@@ -1,4 +1,4 @@
-name: phpunit
+name: quality
 
 on:
   push:
